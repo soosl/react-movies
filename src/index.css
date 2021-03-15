@@ -11,3 +11,41 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+nav {
+  padding: 0 1rem;
+}
+
+.content {
+  min-height: calc(100vh - 70px - 64px);
+  padding: 1.5rem 0;
+}
+
+.input-field input[type=search]:focus:not(.browser-default) {
+  border-bottom: 1px solid #4527a0;
+}
+
+.search-btn {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  background-color: #673ab7;
+}
+
+.search-btn:hover {
+  background-color: #4527a0;
+}
+
+.search-btn:focus {
+  background-color: #4527a0;
+}
+
+.filter-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.filter-form p {
+  margin: 0 15px;
+}
