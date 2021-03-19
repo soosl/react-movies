@@ -1,97 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-class Search extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            search: '',
-            type: 'all',
-        };
-    }
+const Search = (props) => {
+    const { onSearch } = props;
 
-    handleKey = (event) => {
+    const [search, setSearch] = useState('');
+    const [type, setType] = useState('all');
+
+    const handleKey = (event) => {
         if (event.code === 'Enter') {
-            this.props.onSearch(this.state.search, this.state.type);
+            onSearch(search, type);
         }
     };
 
-    handleFilter = (event) => {
-        this.setState(
-            () => ({ type: event.target.dataset.type }),
-            () => this.props.onSearch(this.state.search, this.state.type)
-        );
+    const handleFilter = (event) => {
+        setType(event.target.dataset.type);
+        onSearch(search, event.target.dataset.type);
     };
 
-    render() {
-        return (
-            <>
-                <div className='row'>
-                    <div className='input-field col s12'>
-                        <input
-                            name='search'
-                            type='search'
-                            className='validate'
-                            placeholder='Search'
-                            onChange={(event) =>
-                                this.setState({ search: event.target.value })
-                            }
-                            value={this.state.search}
-                            onKeyDown={this.handleKey}
-                        />
-                        <button
-                            className='btn search-btn'
-                            onClick={() =>
-                                this.props.onSearch(
-                                    this.state.search,
-                                    this.state.type
-                                )
-                            }
-                        >
-                            Search
-                        </button>
-                    </div>
+    return (
+        <>
+            <div className='row'>
+                <div className='input-field col s12'>
+                    <input
+                        name='search'
+                        type='search'
+                        className='validate'
+                        placeholder='Search'
+                        onChange={(event) => setSearch(event.target.value)}
+                        value={search}
+                        onKeyDown={handleKey}
+                    />
+                    <button
+                        className='btn search-btn'
+                        onClick={() => onSearch(search, type)}
+                    >
+                        Search
+                    </button>
                 </div>
-                <form action='#' className='filter-form'>
-                    <p>
-                        <label>
-                            <input
-                                name='filter'
-                                type='radio'
-                                data-type='all'
-                                onChange={this.handleFilter}
-                                checked={this.state.type === 'all'}
-                            />
-                            <span>All</span>
-                        </label>
-                    </p>
-                    <p>
-                        <label>
-                            <input
-                                name='filter'
-                                type='radio'
-                                data-type='movie'
-                                onChange={this.handleFilter}
-                                checked={this.state.type === 'movie'}
-                            />
-                            <span>Movies</span>
-                        </label>
-                    </p>
-                    <p>
-                        <label>
-                            <input
-                                name='filter'
-                                type='radio'
-                                data-type='series'
-                                onChange={this.handleFilter}
-                                checked={this.state.type === 'series'}
-                            />
-                            <span>Series</span>
-                        </label>
-                    </p>
-                </form>
-            </>
-        );
-    }
-}
+            </div>
+            <form action='#' className='filter-form'>
+                <p>
+                    <label>
+                        <input
+                            name='filter'
+                            type='radio'
+                            data-type='all'
+                            onChange={handleFilter}
+                            checked={type === 'all'}
+                        />
+                        <span>All</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input
+                            name='filter'
+                            type='radio'
+                            data-type='movie'
+                            onChange={handleFilter}
+                            checked={type === 'movie'}
+                        />
+                        <span>Movies</span>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        <input
+                            name='filter'
+                            type='radio'
+                            data-type='series'
+                            onChange={handleFilter}
+                            checked={type === 'series'}
+                        />
+                        <span>Series</span>
+                    </label>
+                </p>
+            </form>
+        </>
+    );
+};
 
-export { Search };
+export default Search;
